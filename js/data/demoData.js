@@ -12,12 +12,6 @@ function daysAgoIso(days) {
   return d.toISOString();
 }
 
-function daysFromNowIso(days) {
-  const d = new Date();
-  d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
-}
-
 const LEAD_SEEDS = [
   { empresa: 'Barbearia Prime', tipo: 'Barbearia', bairro: 'Pinheiros', status: 'ativos', score: 94, site: null, instagram: '@barbeariaprime', temWhatsapp: true },
   { empresa: 'Auto Center Brasil', tipo: 'Oficina Mecânica', bairro: 'Vila Mariana', status: 'ativos', score: 78, site: 'autocenterbrasil.com.br', instagram: null, temWhatsapp: true },
@@ -57,30 +51,54 @@ export function generateDemoAutomations() {
   return [
     {
       id: uid('auto'),
-      nome: 'Barbearias — Zona Sul',
-      segmento: ['Barbearia', 'Salão de Beleza'],
-      localizacao: 'São Paulo, Zona Sul',
-      data: daysFromNowIso(2),
-      horario: '08:00',
+      nome: 'Barbearias São Paulo',
+      fonte: 'google-maps',
+      nichos: ['Barbearia', 'Salão de Beleza'],
+      lat: jitter(SP_CENTER.lat),
+      lng: jitter(SP_CENTER.lng),
+      localizacaoLabel: 'São Paulo - SP',
+      maxLeadsPorNicho: 50,
+      mensagem: 'Olá, {{nome}}! Tudo bem? Ajudamos negócios como o seu em {{bairro}} a conseguir mais clientes. Podemos conversar?',
+      intervaloMin: 35,
+      intervaloMax: 60,
+      dias: [0, 1, 2, 3, 4],
+      horarios: ['09:00'],
       status: 'ativa',
+      createdAt: daysAgoIso(6),
     },
     {
       id: uid('auto'),
-      nome: 'Dentistas — Centro',
-      segmento: ['Dentista', 'Clínica'],
-      localizacao: 'São Paulo, Centro',
-      data: daysFromNowIso(5),
-      horario: '09:30',
+      nome: 'Dentistas Centro',
+      fonte: 'google-maps',
+      nichos: ['Dentista', 'Clínica'],
+      lat: jitter(SP_CENTER.lat),
+      lng: jitter(SP_CENTER.lng),
+      localizacaoLabel: 'São Paulo - SP',
+      maxLeadsPorNicho: 100,
+      mensagem: 'Olá {{nome}}, tudo bem? Vi que sua clínica fica em {{bairro}} e gostaria de apresentar uma solução para atrair mais pacientes.',
+      intervaloMin: 40,
+      intervaloMax: 90,
+      dias: [1, 3],
+      horarios: ['09:30', '15:00'],
       status: 'pausada',
+      createdAt: daysAgoIso(3),
     },
     {
       id: uid('auto'),
-      nome: 'Academias — Zona Oeste',
-      segmento: ['Academia'],
-      localizacao: 'São Paulo, Zona Oeste',
-      data: daysAgoIso(3).slice(0, 10),
-      horario: '07:00',
+      nome: 'Academias Zona Oeste',
+      fonte: 'foursquare',
+      nichos: ['Academia'],
+      lat: jitter(SP_CENTER.lat),
+      lng: jitter(SP_CENTER.lng),
+      localizacaoLabel: 'São Paulo - SP',
+      maxLeadsPorNicho: 25,
+      mensagem: 'Oi {{nome}}! Podemos ajudar sua academia em {{bairro}} a captar mais alunos. Vamos conversar?',
+      intervaloMin: 30,
+      intervaloMax: 50,
+      dias: [0, 2, 4],
+      horarios: ['07:00'],
       status: 'concluida',
+      createdAt: daysAgoIso(10),
     },
   ];
 }
